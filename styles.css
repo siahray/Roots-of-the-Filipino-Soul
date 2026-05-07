@@ -51,6 +51,17 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--accent-warm);
+    margin-bottom: 5px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+   .masthead-eyebrow-names {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
     margin-bottom: 24px;
     opacity: 0;
     animation: fadeUp 0.8s ease 0.2s forwards;
