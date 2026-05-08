@@ -1,5 +1,5 @@
-  // ─── SCROLL PROGRESS ───
-  window.addEventListener('scroll', () => {
+// ─── SCROLL PROGRESS ───
+window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const pct = (scrollTop / docHeight) * 100;
@@ -9,45 +9,87 @@
     const btn = document.getElementById('backToTop');
     if (scrollTop > 400) { btn.classList.add('visible'); }
     else { btn.classList.remove('visible'); }
-  });
+});
 
-  // ─── INTERSECTION OBSERVER for animations ───
-  const observer = new IntersectionObserver((entries) => {
+// ─── INTERSECTION OBSERVER for animations ───
+const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
     });
-  }, { threshold: 0.12 });
+}, { threshold: 0.12 });
 
-  document.querySelectorAll('.article-card, .chapter-header, .pullquote').forEach((el, i) => {
+document.querySelectorAll('.article-card, .chapter-header, .pullquote').forEach((el, i) => {
     el.style.transitionDelay = (i % 3) * 0.1 + 's';
     observer.observe(el);
-  });
+});
 
-  // ─── TOGGLE EXPAND ───
-  function toggleExpand(btn) {
+// ─── TOGGLE EXPAND ───
+function toggleExpand(btn) {
     const expanded = btn.nextElementSibling;
     const isOpen = expanded.classList.contains('open');
     expanded.classList.toggle('open');
     btn.textContent = isOpen ? 'Read More' : 'Collapse';
-  }
+}
 
-  // ─── ACTIVE NAV ───
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-inner a');
+// ─── ACTIVE NAV ───
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-inner a');
 
-  window.addEventListener('scroll', () => {
+window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(section => {
-      if (window.scrollY >= section.offsetTop - 80) {
-        current = section.getAttribute('id');
-      }
+        if (window.scrollY >= section.offsetTop - 80) {
+            current = section.getAttribute('id');
+        }
     });
     navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + current) {
-        link.classList.add('active');
-      }
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+        }
     });
-  });
+});
+
+// ─── FIXED LIGHTBOX LOGIC ───
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCap = document.getElementById('lightboxCaption');
+const closeBtn = document.querySelector('.lightbox-close');
+
+function openLightbox(imgSrc, captionText) {
+    lightboxImg.src = imgSrc;
+    lightboxCap.textContent = captionText;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Stop background scroll
+}
+
+function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Restore scroll
+}
+
+// Attach click event to all image placeholders
+document.querySelectorAll('.img-placeholder').forEach(placeholder => {
+    placeholder.addEventListener('click', () => {
+        const img = placeholder.querySelector('img');
+        const cardTitle = placeholder.closest('.article-card')?.querySelector('h3')?.innerText;
+        const chapterTitle = placeholder.closest('section')?.querySelector('h2')?.innerText;
+        
+        if (img && img.src) {
+            openLightbox(img.src, cardTitle || chapterTitle || "Artifact View");
+        }
+    });
+});
+
+// Event Listeners for Closing
+closeBtn.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+});
+
+// Escape key to close
+document.addEventListener('keydown', (e) => {
+    if (e.key === "Escape") closeLightbox();
+});
