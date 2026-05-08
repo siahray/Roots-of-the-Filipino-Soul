@@ -78,7 +78,7 @@ document.querySelectorAll('.img-placeholder').forEach(placeholder => {
         const chapterTitle = placeholder.closest('section')?.querySelector('h2')?.innerText;
         
         if (img && img.src) {
-            openLightbox(img.src, cardTitle || chapterTitle || "Artifact View");
+            openLightbox(img.src, cardTitle || chapterTitle || "Photo Documntation");
         }
     });
 });
