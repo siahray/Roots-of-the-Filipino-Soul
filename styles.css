@@ -157,10 +157,12 @@ body {
 }
 
 .hero-gallery .img-placeholder {
+  margin-top: 20px;
   height: 100%; /* Overrides the static 160px */
   margin-bottom: 0;
   cursor: pointer;
   transition: transform 0.4s ease;
+  border-color: #1a1208;
 }
 
 .hero-gallery .img-placeholder:hover {
@@ -641,7 +643,7 @@ body {
 }
 
 .narrative-block::before {
-  content: '"Essential Questions" Reflection';
+  content: 'Reflection';
   display: block;
   font-family: "DM Mono", monospace;
   font-size: 9.5px;
@@ -824,6 +826,24 @@ body {
   font-style: italic;
   color: var(--ink-muted);
   line-height: 1.85;
+}
+
+/* ─── CITATION ─── */
+.citation {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  opacity: 0.6;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 14px;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.citation em {
+  font-style: italic;
 }
 
 /* ─── RESPONSIVE ─── */
